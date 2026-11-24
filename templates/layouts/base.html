@@ -125,9 +125,17 @@
         {{block "content" .}}{{end}}
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-950 text-slate-400 py-16 mt-20 border-t border-slate-800/80 w-full">
-        <div class="w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Footer with Architecture Pattern Background -->
+    <footer class="relative bg-slate-950 text-slate-400 py-16 mt-20 border-t border-slate-800/80 w-full overflow-hidden">
+        <!-- Architecture Pattern Overlay Image -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <img src="/static/images/footer-bg.webp" 
+                 alt="Footer Architecture Pattern" 
+                 class="w-full h-full object-cover object-center opacity-15 filter brightness-110">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/90"></div>
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
                 <div class="space-y-4">
                     <a href="/" class="inline-block">
