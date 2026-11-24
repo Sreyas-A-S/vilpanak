@@ -260,7 +260,7 @@
                                 <!-- Bold Price in Top Right -->
                                 <div class="text-left sm:text-right shrink-0">
                                     <div class="text-2xl font-black text-slate-900 tracking-tight">₹{{formatPrice .Price}}</div>
-                                    {{if gt .AreaSqFt 0}}
+                                    {{if gt .AreaSqFt 0.0}}
                                     <span class="text-xs text-slate-400 font-semibold">₹{{printf "%.0f" (div .Price .AreaSqFt)}} / sq.ft</span>
                                     {{end}}
                                 </div>
