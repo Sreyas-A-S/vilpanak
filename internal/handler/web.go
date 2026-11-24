@@ -198,3 +198,18 @@ func (h *WebHandler) PostInquiry(c *gin.Context) {
 	slug := c.Param("slug")
 	c.Redirect(http.StatusSeeOther, "/properties/"+slug+"?inquiry=success#inquiry")
 }
+
+func (h *WebHandler) About(c *gin.Context) {
+	renderView(c, "about.html", gin.H{})
+}
+
+func (h *WebHandler) Contact(c *gin.Context) {
+	renderView(c, "contact.html", gin.H{
+		"MessageSent": c.Query("sent") == "true",
+	})
+}
+
+func (h *WebHandler) PostContact(c *gin.Context) {
+	c.Redirect(http.StatusSeeOther, "/contact?sent=true")
+}
+

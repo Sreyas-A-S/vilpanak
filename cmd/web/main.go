@@ -45,6 +45,9 @@ func main() {
 	r.GET("/properties", webHandler.Properties)
 	r.GET("/properties/:slug", webHandler.PropertyDetail)
 	r.POST("/properties/:slug/inquiry", webHandler.PostInquiry)
+	r.GET("/about", webHandler.About)
+	r.GET("/contact", webHandler.Contact)
+	r.POST("/contact", webHandler.PostContact)
 
 	// Admin Routes (Auth Protected)
 	r.GET("/admin/login", adminHandler.ShowLogin)
