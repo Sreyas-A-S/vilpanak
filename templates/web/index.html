@@ -470,23 +470,14 @@ function scrollDistricts(direction) {
                     </div>
                     {{end}}
 
-                    <!-- Top Tags (FOR SALE / FOR RENT, Verified, and Heart Wishlist) -->
-                    <div class="absolute top-3.5 inset-x-3.5 flex items-center justify-between pointer-events-none">
-                        <div class="flex items-center gap-2">
-                            <span class="px-3 py-1 text-[11px] font-black rounded-full text-white uppercase tracking-wider shadow-sm {{if eq .ListingType "rent"}}bg-emerald-600{{else}}bg-blue-600{{end}}">
-                                For {{.ListingType}}
-                            </span>
-                            <span class="px-3 py-1 text-[11px] font-bold rounded-full bg-white text-slate-800 shadow-sm flex items-center gap-1">
-                                <span class="text-emerald-500 font-black">✓</span> Verified
-                            </span>
-                        </div>
-
-                        <!-- Wishlist Heart Button -->
-                        <button type="button" aria-label="Save Property" class="pointer-events-auto w-8 h-8 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-red-500 shadow-sm flex items-center justify-center transition-all hover:scale-110 active:scale-90">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                            </svg>
-                        </button>
+                    <!-- Top Tags (FOR SALE / FOR RENT, Verified) -->
+                    <div class="absolute top-3.5 left-3.5 flex items-center gap-2 pointer-events-none">
+                        <span class="px-3 py-1 text-[11px] font-black rounded-full text-white uppercase tracking-wider shadow-sm {{if eq .ListingType "rent"}}bg-emerald-600{{else}}bg-blue-600{{end}}">
+                            For {{.ListingType}}
+                        </span>
+                        <span class="px-3 py-1 text-[11px] font-bold rounded-full bg-white text-slate-800 shadow-sm flex items-center gap-1">
+                            <span class="text-emerald-500 font-black">✓</span> Verified
+                        </span>
                     </div>
 
                     <!-- Bottom Price Overlay Badge -->
