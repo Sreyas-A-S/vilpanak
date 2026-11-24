@@ -29,8 +29,9 @@
                 </span>
             </div>
             <h1 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">{{.Property.Title}}</h1>
-            <p class="text-sm font-medium text-slate-500 mt-1 flex items-center gap-1">
-                📍 {{.Property.Address}}, {{.Property.City}}, Kerala - {{.Property.PostalCode}}
+            <p class="text-sm font-medium text-slate-500 mt-1 flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-rose-500 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                <span>{{.Property.Address}}, {{.Property.City}}, Kerala - {{.Property.PostalCode}}</span>
             </p>
         </div>
 
@@ -158,26 +159,30 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
                     <div class="space-y-1">
                         <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Bedrooms</span>
-                        <div class="text-lg font-black text-slate-900 flex items-center gap-1.5">
-                            🛏️ {{.Property.Bedrooms}} BHK
+                        <div class="text-lg font-black text-slate-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9a4 4 0 00-4-4zm-8 6h6a2 2 0 012 2v0H11v-2z"/></svg>
+                            <span>{{.Property.Bedrooms}} BHK</span>
                         </div>
                     </div>
                     <div class="space-y-1">
                         <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Bathrooms</span>
-                        <div class="text-lg font-black text-slate-900 flex items-center gap-1.5">
-                            🚿 {{.Property.Bathrooms}} Baths
+                        <div class="text-lg font-black text-slate-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-cyan-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M21 10.5V7a3 3 0 00-3-3H6a3 3 0 00-3 3v3.5A3.5 3.5 0 006.5 14H7v3a3 3 0 003 3h4a3 3 0 003-3v-3h.5a3.5 3.5 0 003.5-3.5zM15 17a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3h6v3zm4-6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 10.5V7a1 1 0 011-1h12a1 1 0 011 1v3.5z"/></svg>
+                            <span>{{.Property.Bathrooms}} Baths</span>
                         </div>
                     </div>
                     <div class="space-y-1">
                         <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Super Area</span>
-                        <div class="text-lg font-black text-slate-900 flex items-center gap-1.5">
-                            📐 {{.Property.AreaSqFt}} sq.ft
+                        <div class="text-lg font-black text-slate-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-indigo-500 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z"/></svg>
+                            <span>{{.Property.AreaSqFt}} sq.ft</span>
                         </div>
                     </div>
                     <div class="space-y-1">
                         <span class="text-xs text-slate-400 font-bold uppercase tracking-wider">Parking</span>
-                        <div class="text-lg font-black text-slate-900 flex items-center gap-1.5">
-                            🚗 {{.Property.ParkingSpaces}} Covered
+                        <div class="text-lg font-black text-slate-900 flex items-center gap-2">
+                            <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+                            <span>{{.Property.ParkingSpaces}} Covered</span>
                         </div>
                     </div>
                 </div>
@@ -225,8 +230,9 @@
                 </div>
 
                 {{if .InquirySuccess}}
-                <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-2xl font-semibold">
-                    🎉 Thank you! The property manager will contact you within 15 minutes.
+                <div class="p-4 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-2xl font-semibold flex items-center gap-2">
+                    <svg class="w-5 h-5 text-emerald-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    <span>Thank you! The property manager will contact you within 15 minutes.</span>
                 </div>
                 {{end}}
 
@@ -272,8 +278,9 @@
                         <span>Chat on WhatsApp</span>
                     </a>
 
-                    <p class="text-[11px] text-center text-slate-400">
-                        🔒 Your contact details are securely protected and not shared with 3rd parties.
+                    <p class="text-[11px] text-center text-slate-400 flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+                        <span>Your contact details are securely protected and not shared with 3rd parties.</span>
                     </p>
                 </form>
             </div>

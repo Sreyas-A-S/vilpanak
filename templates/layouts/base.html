@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50">
+<html lang="en" class="h-full bg-slate-50 scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +42,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
+        html { scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         
         /* Preloader Animation */
@@ -58,6 +59,10 @@
             50% { transform: scale(1.05); opacity: 0.85; }
         }
         .preloader-pulse {
+            animation: pulseLogo 1.6s ease-in-out infinite;
+        }
+    </style>
+</head>
             animation: pulseLogo 1.6s ease-in-out infinite;
         }
     </style>
@@ -127,12 +132,12 @@
 
     <!-- Footer with Architecture Pattern Background -->
     <footer class="relative bg-slate-950 text-slate-400 py-16 mt-20 border-t border-slate-800/80 w-full overflow-hidden">
-        <!-- Architecture Pattern Overlay Image -->
+        <!-- Architecture Pattern Overlay Image (crisp and visible) -->
         <div class="absolute inset-0 z-0 pointer-events-none">
             <img src="/static/images/footer-bg.webp" 
                  alt="Footer Architecture Pattern" 
-                 class="w-full h-full object-cover object-center opacity-15 filter brightness-110">
-            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/90"></div>
+                 class="w-full h-full object-cover object-center opacity-30 filter contrast-125">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/60 to-slate-950/80"></div>
         </div>
 
         <div class="relative z-10 w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
