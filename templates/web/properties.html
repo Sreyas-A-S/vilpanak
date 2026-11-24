@@ -1,0 +1,338 @@
+{{define "title"}}Properties in Kerala - Buy, Rent Houses, Villas, Plots - Vilpanak{{end}}
+
+{{define "content"}}
+<!-- Top Panoramic Kerala Banner Header (Exact Match to Screenshot) -->
+<section class="relative w-full overflow-hidden bg-slate-900 min-h-[220px] sm:min-h-[260px] flex items-center">
+    <!-- Banner Image with Light Gradient Overlay -->
+    <div class="absolute inset-0 z-0">
+        <picture class="w-full h-full block">
+            <source srcset="/static/images/properties-banner.webp" type="image/webp">
+            <img src="/static/images/properties-banner.jpg" 
+                 alt="Properties in Kerala" 
+                 class="w-full h-full object-cover object-right sm:object-center"
+                 loading="eager"
+                 fetchpriority="high">
+        </picture>
+        <!-- Soft gradient on the left for crisp text contrast -->
+        <div class="absolute inset-0 bg-gradient-to-r from-sky-50/95 via-sky-50/70 to-transparent sm:w-3/5"></div>
+    </div>
+
+    <!-- Banner Content: Breadcrumbs + Headline -->
+    <div class="relative z-10 w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div class="max-w-xl">
+            <!-- Breadcrumbs -->
+            <nav class="flex items-center gap-1.5 text-xs font-semibold text-slate-700 mb-2.5">
+                <a href="/" class="hover:text-blue-600 flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    Home
+                </a>
+                <span class="text-slate-400">›</span>
+                <span class="text-slate-900 font-bold">Properties</span>
+                {{if .Filter.City}}
+                <span class="text-slate-400">›</span>
+                <span class="text-blue-600 font-bold">{{.Filter.City}}</span>
+                {{end}}
+            </nav>
+
+            <!-- Headline -->
+            <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
+                Properties in {{if .Filter.City}}{{.Filter.City}}{{else}}Kerala{{end}}
+            </h1>
+            <p class="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+                Showing verified residential homes, plots, and commercial listings
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Main Catalog Container with 2 Columns (Filters Sidebar + Property List) -->
+<div class="w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+    <!-- Top Result Counter & Controls Bar -->
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+            <h2 class="text-lg sm:text-xl font-black text-slate-900">
+                <span class="text-blue-600">{{len .Properties}}</span> Properties Found
+            </h2>
+        </div>
+
+        <!-- Layout Switcher & Sort By Dropdown -->
+        <div class="flex items-center gap-3 self-end sm:self-auto">
+            <!-- Grid / List View Icons -->
+            <div class="flex items-center bg-white rounded-xl border border-slate-200 p-0.5 shadow-2xs">
+                <button type="button" class="p-1.5 rounded-lg bg-blue-600 text-white shadow-xs" title="Grid View">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 4h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 10h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4zM4 16h4v4H4zm6 0h4v4h-4zm6 0h4v4h-4z"/></svg>
+                </button>
+                <button type="button" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700" title="List View">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+                </button>
+            </div>
+
+            <span class="h-4 w-px bg-slate-200 hidden sm:block"></span>
+
+            <!-- Sort Dropdown -->
+            <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-slate-500 whitespace-nowrap">Sort by:</span>
+                <div class="relative">
+                    <select onchange="location.href=this.value" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 pr-8 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 shadow-2xs cursor-pointer appearance-none">
+                        <option value="/properties?sort=newest">Newest First</option>
+                        <option value="/properties?sort=price_asc">Price: Low to High</option>
+                        <option value="/properties?sort=price_desc">Price: High to Low</option>
+                        <option value="/properties?sort=area">Area Sq.Ft</option>
+                    </select>
+                    <span class="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-400">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid: Left Facet Sidebar + Right Property Cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+        <!-- Left Column: Filter Sidebar (Exact Match to Screenshot) -->
+        <aside class="lg:col-span-4 xl:col-span-3">
+            <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm sticky top-24 space-y-6">
+                <!-- Filter Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <h2 class="text-base font-black text-slate-900 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+                        </svg>
+                        Filters
+                    </h2>
+                    <a href="/properties" class="text-xs font-bold text-blue-600 hover:text-blue-700 hover:underline">Reset All</a>
+                </div>
+
+                <form action="/properties" method="GET" class="space-y-5">
+                    <!-- Looking To: Buy / Rent Toggle -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                            Looking to
+                        </label>
+                        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                            <label class="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border cursor-pointer transition select-none {{if or (eq .Filter.ListingType "sale") (eq .Filter.ListingType "")}}bg-blue-600 border-blue-600 text-white shadow-xs{{else}}bg-white border-slate-200 text-slate-700 hover:border-slate-300{{end}}">
+                                <input type="radio" name="type" value="sale" class="sr-only" onchange="this.form.submit()" {{if or (eq .Filter.ListingType "sale") (eq .Filter.ListingType "")}}checked{{end}}>
+                                {{if or (eq .Filter.ListingType "sale") (eq .Filter.ListingType "")}}<span>✓</span>{{end}}
+                                <span>Buy</span>
+                            </label>
+                            <label class="flex items-center justify-center gap-1.5 py-2.5 rounded-xl border cursor-pointer transition select-none {{if eq .Filter.ListingType "rent"}}bg-blue-600 border-blue-600 text-white shadow-xs{{else}}bg-white border-slate-200 text-slate-700 hover:border-slate-300{{end}}">
+                                <input type="radio" name="type" value="rent" class="sr-only" onchange="this.form.submit()" {{if eq .Filter.ListingType "rent"}}checked{{end}}>
+                                {{if eq .Filter.ListingType "rent"}}<span>✓</span>{{end}}
+                                <span>Rent</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- District Dropdown -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                            District
+                        </label>
+                        <div class="relative">
+                            <select name="city" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 pr-8 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer appearance-none">
+                                <option value="">All Kerala</option>
+                                <option value="Ernakulam" {{if eq .Filter.City "Ernakulam"}}selected{{end}}>Ernakulam (Kochi)</option>
+                                <option value="Thiruvananthapuram" {{if eq .Filter.City "Thiruvananthapuram"}}selected{{end}}>Thiruvananthapuram</option>
+                                <option value="Kozhikode" {{if eq .Filter.City "Kozhikode"}}selected{{end}}>Kozhikode (Calicut)</option>
+                                <option value="Thrissur" {{if eq .Filter.City "Thrissur"}}selected{{end}}>Thrissur</option>
+                                <option value="Kollam" {{if eq .Filter.City "Kollam"}}selected{{end}}>Kollam</option>
+                                <option value="Alappuzha" {{if eq .Filter.City "Alappuzha"}}selected{{end}}>Alappuzha</option>
+                                <option value="Kottayam" {{if eq .Filter.City "Kottayam"}}selected{{end}}>Kottayam</option>
+                                <option value="Palakkad" {{if eq .Filter.City "Palakkad"}}selected{{end}}>Palakkad</option>
+                                <option value="Malappuram" {{if eq .Filter.City "Malappuram"}}selected{{end}}>Malappuram</option>
+                                <option value="Kannur" {{if eq .Filter.City "Kannur"}}selected{{end}}>Kannur</option>
+                                <option value="Wayanad" {{if eq .Filter.City "Wayanad"}}selected{{end}}>Wayanad</option>
+                                <option value="Idukki" {{if eq .Filter.City "Idukki"}}selected{{end}}>Idukki</option>
+                                <option value="Pathanamthitta" {{if eq .Filter.City "Pathanamthitta"}}selected{{end}}>Pathanamthitta</option>
+                                <option value="Kasaragod" {{if eq .Filter.City "Kasaragod"}}selected{{end}}>Kasaragod</option>
+                            </select>
+                            <span class="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Bedrooms (BHK) Filter -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9a4 4 0 00-4-4zm-8 6h6a2 2 0 012 2v0H11v-2z"/></svg>
+                            Bedrooms (BHK)
+                        </label>
+                        <div class="grid grid-cols-4 gap-1.5 text-xs font-bold text-slate-700">
+                            <label class="py-2 text-center rounded-xl border border-slate-200 bg-white hover:border-blue-500 cursor-pointer transition select-none">
+                                <input type="checkbox" name="bedrooms" value="1" class="sr-only">
+                                <span>1 BHK</span>
+                            </label>
+                            <label class="py-2 text-center rounded-xl border border-slate-200 bg-white hover:border-blue-500 cursor-pointer transition select-none">
+                                <input type="checkbox" name="bedrooms" value="2" class="sr-only">
+                                <span>2 BHK</span>
+                            </label>
+                            <label class="py-2 text-center rounded-xl border border-slate-200 bg-white hover:border-blue-500 cursor-pointer transition select-none">
+                                <input type="checkbox" name="bedrooms" value="3" class="sr-only">
+                                <span>3 BHK</span>
+                            </label>
+                            <label class="py-2 text-center rounded-xl border border-blue-500 bg-blue-50/70 text-blue-600 cursor-pointer transition select-none">
+                                <input type="checkbox" name="bedrooms" value="4" class="sr-only" checked>
+                                <span>4+ BHK</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Max Budget -->
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1.5">
+                            <svg class="w-3.5 h-3.5 text-slate-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14h-2v-2h2v2zm0-4h-2V7h2v5z"/></svg>
+                            Max Budget
+                        </label>
+                        <div class="relative">
+                            <select name="max_price" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 pr-8 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 cursor-pointer appearance-none">
+                                <option value="">Any Budget</option>
+                                <option value="3000000">Up to ₹30 Lakh</option>
+                                <option value="6000000">Up to ₹60 Lakh</option>
+                                <option value="10000000">Up to ₹1 Crore</option>
+                                <option value="25000000">Up to ₹2.5 Crore</option>
+                                <option value="50000000">Up to ₹5 Crore</option>
+                            </select>
+                            <span class="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-slate-400">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/></svg>
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Apply Filters Button -->
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-extrabold py-3.5 rounded-2xl shadow-md shadow-blue-600/25 transition text-sm flex items-center justify-center gap-2">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+                        <span>Apply Filters</span>
+                    </button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Right Column: Horizontal Cards (Exact Match to Screenshot) -->
+        <main class="lg:col-span-8 xl:col-span-9 space-y-6">
+            {{if .Properties}}
+                {{range .Properties}}
+                <div class="bg-white rounded-3xl p-5 border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col md:flex-row gap-6 group hover:-translate-y-0.5">
+                    <!-- Property Image Container (1/12 Tag + Pills + Wishlist) -->
+                    <div class="relative w-full md:w-80 h-56 shrink-0 rounded-2xl overflow-hidden bg-slate-100">
+                        {{if .CoverImage}}
+                        <img src="{{.CoverImage}}" alt="{{.Title}}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        {{else}}
+                        <div class="w-full h-full flex items-center justify-center bg-slate-200 text-slate-400">
+                            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                        </div>
+                        {{end}}
+
+                        <!-- Top Badges Cluster -->
+                        <div class="absolute top-3 inset-x-3 flex items-center justify-between pointer-events-none">
+                            <div class="flex items-center gap-1.5">
+                                <span class="px-2.5 py-1 text-[11px] font-black rounded-full text-white uppercase tracking-wider shadow-xs {{if eq .ListingType "rent"}}bg-emerald-600{{else}}bg-blue-600{{end}}">
+                                    For {{.ListingType}}
+                                </span>
+                                <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-white text-slate-800 shadow-xs flex items-center gap-1">
+                                    <span class="text-emerald-500 font-bold">✓</span> Verified
+                                </span>
+                            </div>
+
+                            <!-- Heart Wishlist -->
+                            <button type="button" aria-label="Save Property" class="pointer-events-auto w-7 h-7 rounded-full bg-white/95 hover:bg-white text-slate-700 hover:text-red-500 shadow-xs flex items-center justify-center transition hover:scale-110 active:scale-90">
+                                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- 1/12 Photo Counter Badge -->
+                        <div class="absolute bottom-3 right-3 bg-black/60 backdrop-blur-xs text-white text-[11px] font-bold px-2 py-0.5 rounded-lg">
+                            1/12
+                        </div>
+                    </div>
+
+                    <!-- Info & Action Section -->
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div>
+                            <!-- Header with Location, Title & Top-Right Price -->
+                            <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                                <div>
+                                    <div class="flex items-center gap-1 text-[11px] font-extrabold text-rose-500 uppercase tracking-wider mb-1">
+                                        <svg class="w-3 h-3 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                                        <span>{{.City}}, KERALA</span>
+                                    </div>
+                                    <h3 class="text-lg sm:text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">
+                                        <a href="/properties/{{.Slug}}">{{.Title}}</a>
+                                    </h3>
+                                </div>
+
+                                <!-- Bold Price in Top Right -->
+                                <div class="text-left sm:text-right shrink-0">
+                                    <div class="text-2xl font-black text-slate-900 tracking-tight">₹{{formatPrice .Price}}</div>
+                                    {{if gt .AreaSqFt 0}}
+                                    <span class="text-xs text-slate-400 font-semibold">₹{{printf "%.0f" (div .Price .AreaSqFt)}} / sq.ft</span>
+                                    {{end}}
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <p class="text-xs text-slate-500 mt-2 line-clamp-2 leading-relaxed font-normal">
+                                {{.Description}}
+                            </p>
+
+                            <!-- Inline Specs (4 BHK, 4 Baths, 3,800 sq.ft, Ready to Move) -->
+                            <div class="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 text-xs font-bold text-slate-700">
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 7h-8v8H3V5H1v15h2v-3h18v3h2v-9a4 4 0 00-4-4zm-8 6h6a2 2 0 012 2v0H11v-2z"/></svg>
+                                    <span>{{.Bedrooms}} BHK</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-cyan-600 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M21 10.5V7a3 3 0 00-3-3H6a3 3 0 00-3 3v3.5A3.5 3.5 0 006.5 14H7v3a3 3 0 003 3h4a3 3 0 003-3v-3h.5a3.5 3.5 0 003.5-3.5zM15 17a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3h6v3zm4-6.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 015 10.5V7a1 1 0 011-1h12a1 1 0 011 1v3.5z"/></svg>
+                                    <span>{{.Bathrooms}} Baths</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <svg class="w-4 h-4 text-indigo-500 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M3 21h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18v-2H3v2zm0-4h18V7H3v2zm0-6v2h18V3H3z"/></svg>
+                                    <span>{{.AreaSqFt}} sq.ft</span>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-slate-800">
+                                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                    <span>Ready to Move</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Action & Verification Bar -->
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-slate-100 pt-4 mt-4">
+                            <!-- Certified Agent Verified Badge -->
+                            <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
+                                <svg class="w-4 h-4 text-blue-600 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                                <span>Certified Agent Verified</span>
+                                <span class="text-slate-400 cursor-pointer" title="Title checked and approved">ⓘ</span>
+                            </div>
+
+                            <!-- Buttons: View Details & Contact Owner -->
+                            <div class="flex items-center gap-2.5">
+                                <a href="/properties/{{.Slug}}" class="px-5 py-2.5 rounded-xl text-xs font-bold border border-slate-200 text-slate-800 hover:bg-slate-50 transition">
+                                    View Details
+                                </a>
+                                <a href="/properties/{{.Slug}}#inquiry" class="px-5 py-2.5 rounded-xl text-xs font-extrabold bg-blue-600 hover:bg-blue-700 active:scale-95 text-white shadow-md shadow-blue-500/20 transition flex items-center gap-1.5">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                                    <span>Contact Owner</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            {{else}}
+                <div class="py-16 text-center bg-white rounded-3xl border border-dashed border-slate-300">
+                    <p class="text-slate-500 font-medium">No properties match your active filter criteria.</p>
+                    <a href="/properties" class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition">
+                        Clear All Filters
+                    </a>
+                </div>
+            {{end}}
+        </main>
+    </div>
+</div>
+{{end}}

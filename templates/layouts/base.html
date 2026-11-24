@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{block "title" .}}Vilpanak - Kerala Real Estate Network{{end}}</title>
+    
+    <!-- Meta SEO & Description -->
+    <meta name="description" content="Find verified houses, luxury villas, apartments, plots, and commercial properties across all 14 districts in Kerala on Vilpanak.">
+    <meta name="keywords" content="Kerala real estate, buy house in Kerala, Kochi villas, Trivandrum plots, apartments in Calicut, Thrissur properties">
+    <meta name="author" content="Vilpanak">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (OG) Meta Tags (Facebook, WhatsApp, LinkedIn) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Vilpanak">
+    <meta property="og:title" content="Vilpanak - Kerala's Trusted Property Network">
+    <meta property="og:description" content="Explore thousands of verified houses, villas, apartments, and plots across all 14 districts of Kerala.">
+    <meta property="og:image" content="/static/images/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/jpeg">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Vilpanak - Kerala Real Estate Network">
+    <meta name="twitter:description" content="Buy, Rent, and Sell verified properties in Kerala. Houses, flats, and plots across 14 districts.">
+    <meta name="twitter:image" content="/static/images/og-image.jpg">
+
+    <!-- Favicons & App Icons -->
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <meta name="theme-color" content="#2563eb">
+
+    <!-- Compiled Tailwind CSS local asset (with CDN fallback) -->
+    <link rel="stylesheet" href="/static/css/output.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        /* Preloader Animation */
+        #preloader {
+            transition: opacity 0.4s ease-out, visibility 0.4s ease-out;
+        }
+        #preloader.loaded {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        @keyframes pulseLogo {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.85; }
+        }
+        .preloader-pulse {
+            animation: pulseLogo 1.6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen text-slate-800 bg-slate-50 selection:bg-blue-600 selection:text-white">
+
+    <!-- Preloader with Animated Logo -->
+    <div id="preloader" class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white">
+        <div class="relative flex flex-col items-center">
+            <img src="/static/images/logo.webp" alt="Vilpanak" class="h-14 sm:h-16 w-auto preloader-pulse mb-6">
+            <div class="w-36 h-1 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full bg-blue-600 rounded-full animate-pulse"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Navigation (Responsive bounded container for all zoom levels) -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs w-full">
+        <div class="w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center shrink-0">
+                <img src="/static/images/logo.webp" alt="Vilpanak" class="h-9 sm:h-11 w-auto object-contain">
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8 font-semibold text-sm text-slate-600">
+                <a href="/" class="hover:text-blue-600 transition">Home</a>
+                <a href="/properties?type=sale" class="hover:text-blue-600 transition">Buy</a>
+                <a href="/properties?type=rent" class="hover:text-blue-600 transition">Rent</a>
+                <a href="/properties" class="hover:text-blue-600 transition">All Properties</a>
+                <a href="/properties?category=plots" class="hover:text-blue-600 transition">Plots</a>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-4 shrink-0">
+                <a href="/admin/login" class="text-xs sm:text-sm font-bold text-slate-700 hover:text-blue-600 transition">Admin Portal</a>
+                <a href="/properties" class="inline-flex items-center justify-center px-4 sm:px-5 py-2.5 rounded-2xl font-bold text-xs sm:text-sm text-white bg-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/25 transition">
+                    Explore Homes
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger Button -->
+            <div class="flex md:hidden items-center">
+                <button type="button" onclick="document.getElementById('mobileMenu').classList.toggle('hidden')" class="p-2 text-slate-800 hover:text-blue-600 focus:outline-none" aria-label="Toggle Navigation">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer / Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden border-t border-slate-100 bg-white px-4 pt-3 pb-5 space-y-3 shadow-lg">
+            <a href="/" class="block text-base font-semibold text-slate-800 hover:text-blue-600 py-1">Home</a>
+            <a href="/properties?type=sale" class="block text-base font-semibold text-slate-800 hover:text-blue-600 py-1">Buy</a>
+            <a href="/properties?type=rent" class="block text-base font-semibold text-slate-800 hover:text-blue-600 py-1">Rent</a>
+            <a href="/properties" class="block text-base font-semibold text-slate-800 hover:text-blue-600 py-1">All Properties</a>
+            <a href="/properties?category=plots" class="block text-base font-semibold text-slate-800 hover:text-blue-600 py-1">Plots</a>
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <a href="/admin/login" class="text-sm font-bold text-slate-700 hover:text-blue-600">Admin Portal</a>
+                <a href="/properties" class="inline-flex items-center justify-center px-4 py-2 rounded-xl font-bold text-xs text-white bg-blue-600 hover:bg-blue-700">Explore Homes</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Block -->
+    <main class="flex-grow w-full">
+        {{block "content" .}}{{end}}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-slate-400 py-16 mt-20 border-t border-slate-800/80 w-full">
+        <div class="w-full max-w-7xl 2xl:max-w-8xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="space-y-4">
+                    <a href="/" class="inline-block">
+                        <img src="/static/images/logo.webp" alt="Vilpanak" class="h-10 w-auto brightness-0 invert opacity-90">
+                    </a>
+                    <p class="text-sm text-slate-400 leading-relaxed">
+                        Kerala's dedicated real estate portal connecting buyers, sellers, and verified agents across all 14 districts.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Kerala Real Estate</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/properties?city=Ernakulam" class="hover:text-white transition">Kochi / Ernakulam</a></li>
+                        <li><a href="/properties?city=Thiruvananthapuram" class="hover:text-white transition">Trivandrum</a></li>
+                        <li><a href="/properties?city=Kozhikode" class="hover:text-white transition">Calicut</a></li>
+                        <li><a href="/properties?city=Thrissur" class="hover:text-white transition">Thrissur</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Categories</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/properties?category=residential" class="hover:text-white transition">Houses & Villas</a></li>
+                        <li><a href="/properties?category=apartments" class="hover:text-white transition">Luxury Apartments</a></li>
+                        <li><a href="/properties?category=plots" class="hover:text-white transition">Plots & Farmland</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-semibold mb-4 text-xs tracking-wider uppercase">Help & Support</h4>
+                    <p class="text-sm">support@vilpanak.com</p>
+                    <p class="text-sm mt-1">+91 94000 00000</p>
+                    <p class="text-xs text-slate-500 mt-4">&copy; 2026 Vilpanak. Fast Go Gin SSR + Tailwind Engine.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Preloader Dismiss Script -->
+    <script>
+        window.addEventListener('load', function() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                setTimeout(function() {
+                    preloader.classList.add('loaded');
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>
