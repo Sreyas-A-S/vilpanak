@@ -42,38 +42,110 @@
         </div>
     </div>
 
-    <!-- 99acres-Style Image Gallery (Mosaic Grid) -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-3 mb-8 sm:mb-10 h-64 sm:h-80 md:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm">
-        <!-- Main Large Photo -->
-        <div class="md:col-span-2 h-full relative group cursor-pointer overflow-hidden bg-slate-100">
-            <img src="{{.Property.CoverImage}}" alt="{{.Property.Title}}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            <div class="absolute bottom-4 left-4 bg-black/60 text-white text-xs font-semibold px-3 py-1.5 rounded-xl backdrop-blur-xs">
-                Featured Cover View
+    <!-- Interactive Carousel Gallery with Main Preview & Thumbnail Strip -->
+    <div class="mb-10 space-y-3">
+        <!-- Main Large Featured Stage with Prev/Next Controls -->
+        <div class="relative w-full h-80 sm:h-[460px] md:h-[520px] rounded-3xl overflow-hidden shadow-md bg-slate-900 group select-none">
+            <img id="mainGalleryImage" 
+                 src="{{.Property.CoverImage}}" 
+                 alt="{{.Property.Title}}" 
+                 class="w-full h-full object-cover transition-all duration-500">
+
+            <!-- Gradient overlay for controls contrast -->
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30 pointer-events-none"></div>
+
+            <!-- Top Counter & Fullscreen Badge -->
+            <div class="absolute top-4 inset-x-4 flex items-center justify-between z-10 pointer-events-none">
+                <span class="px-3 py-1.5 rounded-full text-xs font-bold bg-black/60 text-white backdrop-blur-md shadow-sm">
+                    <span id="galleryCounter">1</span> / 5 Photos
+                </span>
+                <span class="px-3 py-1.5 rounded-full text-xs font-semibold bg-white/90 text-slate-800 backdrop-blur-md shadow-sm">
+                    Interactive Gallery
+                </span>
+            </div>
+
+            <!-- Left Arrow Navigation -->
+            <button type="button" 
+                    onclick="navigateGallery(-1)" 
+                    aria-label="Previous Photo"
+                    class="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 focus:outline-none z-20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+
+            <!-- Right Arrow Navigation -->
+            <button type="button" 
+                    onclick="navigateGallery(1)" 
+                    aria-label="Next Photo"
+                    class="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 focus:outline-none z-20">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+            </button>
+
+            <!-- Bottom Caption -->
+            <div class="absolute bottom-4 left-4 z-10 pointer-events-none">
+                <span id="galleryCaption" class="text-sm sm:text-base font-bold text-white drop-shadow">
+                    Main Exterior Architecture
+                </span>
             </div>
         </div>
 
-        <!-- 2 Side Photos -->
-        <div class="hidden md:flex flex-col gap-3 h-full">
-            <div class="h-1/2 relative group cursor-pointer overflow-hidden bg-slate-100 rounded-2xl">
-                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" alt="Living Hall" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            </div>
-            <div class="h-1/2 relative group cursor-pointer overflow-hidden bg-slate-100 rounded-2xl">
-                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" alt="Master Bedroom" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            </div>
-        </div>
-
-        <div class="hidden md:flex flex-col gap-3 h-full">
-            <div class="h-1/2 relative group cursor-pointer overflow-hidden bg-slate-100 rounded-2xl">
-                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Modern Kitchen" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-            </div>
-            <div class="h-1/2 relative group cursor-pointer overflow-hidden bg-slate-100 rounded-2xl">
-                <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80" alt="Exterior Garden" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                <div class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-sm">
-                    + 8 More Photos
-                </div>
-            </div>
+        <!-- Thumbnail Carousel Strip -->
+        <div class="flex items-center gap-3 overflow-x-auto pb-2 scrollbar-none snap-x" id="galleryThumbs">
+            <button type="button" onclick="selectGalleryPhoto(0)" class="thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-blue-600 transition-all shadow-sm focus:outline-none opacity-100">
+                <img src="{{.Property.CoverImage}}" alt="Main Cover" class="w-full h-full object-cover">
+            </button>
+            <button type="button" onclick="selectGalleryPhoto(1)" class="thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 transition-all shadow-sm focus:outline-none opacity-70 hover:opacity-100">
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=600&q=80" alt="Living Hall" class="w-full h-full object-cover">
+            </button>
+            <button type="button" onclick="selectGalleryPhoto(2)" class="thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 transition-all shadow-sm focus:outline-none opacity-70 hover:opacity-100">
+                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=600&q=80" alt="Master Bedroom" class="w-full h-full object-cover">
+            </button>
+            <button type="button" onclick="selectGalleryPhoto(3)" class="thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 transition-all shadow-sm focus:outline-none opacity-70 hover:opacity-100">
+                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80" alt="Modern Kitchen" class="w-full h-full object-cover">
+            </button>
+            <button type="button" onclick="selectGalleryPhoto(4)" class="thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 transition-all shadow-sm focus:outline-none opacity-70 hover:opacity-100">
+                <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80" alt="Exterior Garden" class="w-full h-full object-cover">
+            </button>
         </div>
     </div>
+
+    <!-- Gallery Script -->
+    <script>
+    const galleryPhotos = [
+        { src: '{{.Property.CoverImage}}', caption: 'Main Architecture & Exterior' },
+        { src: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80', caption: 'Spacious Living Hall & Dining' },
+        { src: 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=80', caption: 'Master Bedroom Suite' },
+        { src: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80', caption: 'Modern Modular Kitchen' },
+        { src: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80', caption: 'Lush Garden & Courtyard' }
+    ];
+    let activePhotoIndex = 0;
+
+    function selectGalleryPhoto(idx) {
+        activePhotoIndex = idx;
+        const mainImg = document.getElementById('mainGalleryImage');
+        const counter = document.getElementById('galleryCounter');
+        const caption = document.getElementById('galleryCaption');
+        const thumbs = document.querySelectorAll('.thumb-btn');
+
+        mainImg.src = galleryPhotos[idx].src;
+        counter.textContent = idx + 1;
+        caption.textContent = galleryPhotos[idx].caption;
+
+        thumbs.forEach((thumb, i) => {
+            if (i === idx) {
+                thumb.className = 'thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-blue-600 transition-all shadow-sm focus:outline-none opacity-100';
+            } else {
+                thumb.className = 'thumb-btn shrink-0 w-24 sm:w-32 h-16 sm:h-20 rounded-2xl overflow-hidden border-2 border-transparent hover:border-slate-300 transition-all shadow-sm focus:outline-none opacity-70 hover:opacity-100';
+            }
+        });
+    }
+
+    function navigateGallery(step) {
+        let next = activePhotoIndex + step;
+        if (next < 0) next = galleryPhotos.length - 1;
+        if (next >= galleryPhotos.length) next = 0;
+        selectGalleryPhoto(next);
+    }
+    </script>
 
     <!-- Content Columns (Details on Left + Lead Form on Right) -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
